@@ -35,6 +35,35 @@ def netmask_to_wildcard_mask(netmask: str) -> str:
     return wildcard_mask_to_netmask(netmask)
 
 
+def addr2dec(addr: str) -> int:
+    """
+    将IP地址转换为整数
+    >>> addr2dec('192.168.0.1')
+    3232235777
+    """
+    items = [int(x) for x in addr.split(".")]
+    return sum([items[i] << [24, 16, 8, 0][i] for i in range(4)])
+
+
+def dec2addr(dec: int) -> str:
+    """
+    将整数恢复为IP地址
+    >>> dec2addr(3232235777)
+    '192.168.0.1'
+    """
+    return ".".join([str(dec >> x & 0xff) for x in [24, 16, 8, 0]])
+
+
+def add_ip_address(ip: str, add_value: int) -> str:
+    """
+    简易的地址加法，无法判断网段
+    >>> add_ip_address('192.168.0.1', 1)
+    '192.168.0.2'
+    """
+    return dec2addr(addr2dec(ip) + add_value)
+
+
+
 class ExcelDataGenerator:
 
     def __init__(self):

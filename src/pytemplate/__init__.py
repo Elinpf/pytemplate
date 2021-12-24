@@ -4,3 +4,4 @@ from .main import netmask_to_bit_length
 from .main import netmask_to_wildcard_mask
 from .main import wildcard_mask_to_netmask
 from .main import write_template as write
+from .main import add_ip_address
