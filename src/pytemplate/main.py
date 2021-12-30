@@ -1,6 +1,8 @@
 from __future__ import annotations
 from openpyxl import load_workbook
 from typing import Dict
+import os
+import sys
 
 
 def netmask_to_bit_length(netmask: str) -> int:
@@ -84,17 +86,17 @@ class ExcelDataGenerator:
         if key is None:
             key = sheet.cell(row=1, column=1).value
 
-        # 取第一列中所有值，生成变量列表
-        for row in sheet.iter_rows(min_row=1, max_row=sheet.max_row, min_col=1, max_col=1):
-            for cell in row:
+        # 取第一行中所有值，生成变量列表
+        for col in sheet.iter_cols(min_col=1, max_col=sheet.max_column, min_row=1, max_row=1):
+            for cell in col:
                 vars_list.append(cell.value)
 
-        # 对每一列进行遍历
-        for col in range(3, sheet.max_column + 1):
+        # 对每一行进行遍历
+        for row in range(3, sheet.max_row + 1):
             idx = 0
             ds = {}
-            for row in sheet.iter_rows(min_row=1, max_row=sheet.max_row, min_col=col, max_col=col):
-                for cell in row:
+            for col in sheet.iter_cols(min_col=1, max_col=sheet.max_column, min_row=row, max_row=row):
+                for cell in col:
                     ds[vars_list[idx]] = cell.value
                     idx += 1
             yield ds
@@ -131,5 +133,16 @@ def write_template(template_str: str, output_file: str, data: dict):
     @param output_file: 输出文件
     @param data: 数据
     """
+
+    # 判断文件夹是否存在
+    dir = os.path.dirname(os.path.join(
+        os.path.dirname(sys.argv[0]), output_file))
+    if not os.path.exists(dir):
+        os.makedirs(dir)
+
     with open(output_file, 'w+', encoding='utf-8') as f1:
-        f1.write(template_str.format(**data))
+        try:
+            f1.write(template_str.format(**data))
+        except KeyError as e:
+            print(f'模板中变量不存在：{e}')
+            exit(1)
