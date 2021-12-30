@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='pytemplate_elinpf',
-    version='0.1.0',
+    version='1.0.0',
     author='elin',
     author_email="elin365433079@gmail.com",
     url="https://github.com/Elinpf/pytemplate",
