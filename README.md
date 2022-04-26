@@ -36,6 +36,10 @@ for ds, info in g.data:
     pytemplate.write(template_str, '{}.txt'.format(ds), info)
 ```
 
+这种方式可以直接使用release中的exe执行程序，效果一样。
+
+![](images/2.png)
+
 如果所使用的数据需要进行二次计算，或者需要新增，则可以使用以下方法
 
 ```py
@@ -58,3 +62,4 @@ for ds in g.load_generator(data_file):
 
 for ds, info in g.data:
     pytemplate.write(template_str, '{}.txt'.format(ds), info)
+```
