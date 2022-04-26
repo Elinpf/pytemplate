@@ -14,6 +14,7 @@ class PyTemplateWindow(QtWidgets.QWidget, Ui_Form):
         self.toolButton_data.clicked.connect(self.get_file)
         self.toolButton_output.clicked.connect(self.get_directory)
         self.pushButton_generate.clicked.connect(self.generate)
+        self.pushButton_exit.clicked.connect(self.close)
 
     def get_file(self):
         obj = self.sender().objectName().split('_')[-1]
