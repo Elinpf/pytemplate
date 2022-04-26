@@ -65,7 +65,6 @@ def add_ip_address(ip: str, add_value: int) -> str:
     return dec2addr(addr2dec(ip) + add_value)
 
 
-
 class ExcelDataGenerator:
 
     def __init__(self):
@@ -74,6 +73,39 @@ class ExcelDataGenerator:
     def load_generator(self, filename: str, sheetname: str = 'Sheet1', key=None):
         """
         加载excel文件, 这个是个迭代器
+        @param filename: 文件名
+        @param sheetname: sheet名
+        @param key: 唯一字段名，如果为None，则按照第一行的字段名称自动生成
+        """
+        wb = load_workbook(filename)
+        sheet = wb[sheetname]
+
+        vars_list = []
+
+        if key is None:
+            key = sheet.cell(row=1, column=1).value
+
+        # 取第一列中所有值，生成变量列表
+        for row in sheet.iter_rows(min_row=1, max_row=sheet.max_row, min_col=1, max_col=1):
+            for cell in row:
+                vars_list.append(cell.value)
+
+        # 对每一列进行遍历
+        for col in range(3, sheet.max_column + 1):
+            idx = 0
+            ds = {}
+            for row in sheet.iter_rows(min_row=1, max_row=sheet.max_row, min_col=col, max_col=col):
+                for cell in row:
+                    ds[vars_list[idx]] = cell.value
+                    idx += 1
+            yield ds
+
+            # 合并到所有
+            self._data[ds[key]] = ds
+
+    def load_generator_horizontal(self, filename: str, sheetname: str = 'Sheet1', key=None):
+        """
+        加载excel文件, 这个是个迭代器, 横向遍历
         @param filename: 文件名
         @param sheetname: sheet名
         @param key: 唯一字段名，如果为None，则按照第一行的字段名称自动生成

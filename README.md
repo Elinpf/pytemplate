@@ -8,6 +8,12 @@
 python setup.py install
 ```
 
+or
+
+```
+pip install pytemplate_elinpf
+```
+
 ## EXCEL格式
 
 excel中第一行是要替换的占位符，第二行是备注，后面每行为一组进行替换。(文件`data.xlsx`作为参考)
