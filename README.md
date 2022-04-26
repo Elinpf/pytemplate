@@ -18,6 +18,8 @@ pip install pytemplate_elinpf
 
 excel中第一行是要替换的占位符，第二行是备注，后面每行为一组进行替换。(文件`data.xlsx`作为参考)
 
+![](images/1.png)
+
 ## 使用示例
 
 如果所使用的数据不需要进行二次计算，则可以使用以下方式
