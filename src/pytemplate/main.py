@@ -177,4 +177,4 @@ def write_template(template_str: str, output_file: str, data: dict):
             f1.write(template_str.format(**data))
         except KeyError as e:
             print(f'模板中变量不存在：{e}')
-            exit(1)
+            raise KeyError(e)
