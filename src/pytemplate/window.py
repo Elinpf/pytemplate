@@ -4,15 +4,6 @@ from pytemplate.gui.generate import Ui_Form
 from pytemplate.main import load_template, ExcelDataGenerator, write_template
 
 
-'''
-g = pytemplate.ExcelDataGenerator()
-g.load(data_file)
-
-template_str = pytemplate.load_template(template_file)
-for ds, info in g.data:
-    pytemplate.write(template_str, '{}.txt'.format(ds), info)'''
-
-
 class PyTemplateWindow(QtWidgets.QWidget, Ui_Form):
     def __init__(self):
         super(PyTemplateWindow, self).__init__()
@@ -67,4 +58,4 @@ if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
     win = PyTemplateWindow()
     win.show()
-    sys.exit(app.exec())
+    sys.exit(app.exec_())
